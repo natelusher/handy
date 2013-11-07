@@ -1,0 +1,175 @@
+export DEV_DIR=$HOME/dev
+export GRAILS_HOME=$DEV_DIR/grails-2.3.1
+export MAVEN_HOME=$DEV_DIR/maven
+export PATH=$PATH:$MAVEN_HOME/bin
+
+export DATABASE_URL=postgres://postgres:postgres@localhost/postgres
+
+if [ -e $HOME/.aliases ] 
+then
+  . $HOME/.aliases
+fi
+
+###############################################################################################
+# taken from http://tldp.org/LDP/abs/html/sample-bashrc.html
+
+#  Automatic setting of $DISPLAY (if not set already).
+function get_xserver ()
+{
+    case $TERM in
+        xterm )
+            XSERVER=$(who am i | awk '{print $NF}' | tr -d ')''(' )
+            # Ane-Pieter Wieringa suggests the following alternative:
+            #  I_AM=$(who am i)
+            #  SERVER=${I_AM#*(}
+            #  SERVER=${SERVER%*)}
+            XSERVER=${XSERVER%%:*}
+            ;;
+            aterm | rxvt)
+            # Find some code that works here. ...
+            ;;
+    esac
+}
+if [ -z ${DISPLAY:=""} ]; then
+    get_xserver
+    if [[ -z ${XSERVER}  || ${XSERVER} == $(hostname) ||
+       ${XSERVER} == "unix" ]]; then
+          DISPLAY=":0.0"          # Display on local host.
+    else
+       DISPLAY=${XSERVER}:0.0     # Display on remote host.
+    fi
+fi
+export DISPLAY
+
+
+#-------------------------------------------------------------
+# Shell Prompt - for many examples, see:
+#       http://www.debian-administration.org/articles/205
+#       http://www.askapache.com/linux/bash-power-prompt.html
+#       http://tldp.org/HOWTO/Bash-Prompt-HOWTO
+#       https://github.com/nojhan/liquidprompt
+#-------------------------------------------------------------
+# Now we construct the prompt.
+PROMPT_COMMAND="history -a"
+case ${TERM} in
+  *term | rxvt | linux)
+        PS1="\[\$(load_color)\][\A\[${NC}\] "
+        # Time of day (with load info):
+        PS1="\[\$(load_color)\][\A\[${NC}\] "
+        # User@Host (with connection type info):
+        PS1=${PS1}"\[${SU}\]\u\[${NC}\]@\[${CNX}\]\h\[${NC}\] "
+        # PWD (with 'disk space' info):
+        PS1=${PS1}"\[\$(disk_color)\]\W]\[${NC}\] "
+        # Prompt (with 'job' info):
+        PS1=${PS1}"\[\$(job_color)\]>\[${NC}\] "
+        # Set title of current xterm:
+        PS1=${PS1}"\[\e]0;[\u@\h] \w\a\]"
+        ;;
+    *)
+        PS1="(\A \u@\h \W) > " # --> PS1="(\A \u@\h \w) > "
+                               # --> Shows full pathname of current dir.
+        ;;
+esac
+
+# Find a file with a pattern in name:
+function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
+
+# Find a file with pattern $1 in name and Execute $2 on it:
+function fe() { find . -type f -iname '*'"${1:-}"'*' \
+-exec ${2:-file} {} \;  ; }
+
+#  Find a pattern in a set of files and highlight them:
+#+ (needs a recent version of egrep).
+function fstr()
+{
+    OPTIND=1
+    local mycase=""
+    local usage="fstr: find string in files.
+Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
+    while getopts :it opt
+    do
+        case "$opt" in
+           i) mycase="-i " ;;
+           *) echo "$usage"; return ;;
+        esac
+    done
+    shift $(( $OPTIND - 1 ))
+    if [ "$#" -lt 1 ]; then
+        echo "$usage"
+        return;
+    fi
+    find . -type f -name "${2:-*}" -print0 | \
+xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
+
+}
+function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
+function pp() { my_ps f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
+
+
+function killps()   # kill by process name
+{
+    local pid pname sig="-TERM"   # default signal
+    if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+        echo "Usage: killps [-SIGNAL] pattern"
+        return;
+    fi
+    if [ $# = 2 ]; then sig=$1 ; fi
+    for pid in $(my_ps| awk '!/awk/ && $0~pat { print $1 }' pat=${!#} )
+    do
+        pname=$(my_ps | awk '$1~var { print $5 }' var=$pid )
+        if ask "Kill process $pid <$pname> with signal $sig?"
+            then kill $sig $pid
+        fi
+    done
+}
+
+function mydf()         # Pretty-print of 'df' output.
+{                       # Inspired by 'dfc' utility.
+    for fs ; do
+
+        if [ ! -d $fs ]
+        then
+          echo -e $fs" :No such file or directory" ; continue
+        fi
+
+        local info=( $(command df -P $fs | awk 'END{ print $2,$3,$5 }') )
+        local free=( $(command df -Pkh $fs | awk 'END{ print $4 }') )
+        local nbstars=$(( 20 * ${info[1]} / ${info[0]} ))
+        local out="["
+        for ((j=0;j<20;j++)); do
+            if [ ${j} -lt ${nbstars} ]; then
+               out=$out"*"
+            else
+               out=$out"-"
+            fi
+        done
+        out=${info[2]}" "$out"] ("$free" free on "$fs")"
+        echo -e $out
+    done
+}
+
+
+function my_ip() # Get IP adress on ethernet.
+{
+    MY_IP=$(/sbin/ifconfig eth0 | awk '/inet/ { print $2 } ' |
+      sed -e s/addr://)
+    echo ${MY_IP:-"Not connected"}
+}
+
+function ii()   # Get current host related info.
+{
+    echo -e "\nYou are logged on ${BRed}$HOST"
+    echo -e "\n${BRed}Additionnal information:$NC " ; uname -a
+    echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
+             cut -d " " -f1 | sort | uniq
+    echo -e "\n${BRed}Current date :$NC " ; date
+    echo -e "\n${BRed}Machine stats :$NC " ; uptime
+    echo -e "\n${BRed}Memory stats :$NC " ; free
+    echo -e "\n${BRed}Diskspace :$NC " ; mydf / $HOME
+    echo -e "\n${BRed}Local IP Address :$NC" ; my_ip
+    echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
+    echo
+}
+
+##################################################################################################
+
