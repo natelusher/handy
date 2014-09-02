@@ -1,0 +1,15 @@
+# Stuff to do when running under cygwin
+
+# PATH updates
+VIRTUALBOX_HOME="/cygdrive/c/Program Files/Oracle/VirtualBox"
+export PATH=$PATH:"$VIRTUALBOX_HOME"
+
+NODEJS_HOME="/cygdrive/c/Program Files/nodejs"
+export PATH=$PATH:$NODEJS_HOME
+
+# Try to get color support in cygwin-related commands
+export TERM=cygwin
+set CYGWIN=nodosfilewarning
+
+export NODE_PATH="/cygdrive/c/Users/${USER}/Application\ Data/npm/node_modules"
+export PATH=$PATH:"$NODE_PATH"

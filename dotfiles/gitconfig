@@ -1,0 +1,14 @@
+[user]
+	name = Nate Lusher
+	email = nlusher@gmail.com
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        interactive = auto
+        ui = true
+        pager = true
+[core]
+	autocrlf = true
+[push]
+	default = simple
