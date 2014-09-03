@@ -40,3 +40,4 @@ alias ga='git add'
 
 # Vagrant aliases
 alias vs='vagrant status'
+alias veewee='bundle exec veewee'

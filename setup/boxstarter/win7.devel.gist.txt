@@ -1,0 +1,35 @@
+Set-ExplorerOptions -showHidenFilesFoldersDrives -showProtectedOSFiles -showFileExtensions
+Enable-RemoteDesktop
+
+cinst PowerShell
+cinst Console2
+cinst putty
+cinst cyg-get
+cinst Cygwin
+
+cinst git
+cinst Wget
+cinst curl
+
+cinst sublimetext2
+cinst notepadplusplus
+cinst Atom
+
+cinst PhantomJS
+cinst Firefox -Version 31.0
+cinst GoogleChrome
+
+cinst Ruby
+cinst ruby.devkit
+cinst Python
+cinst Compass
+
+cinst nodejs
+cinst npm
+cinst pip
+
+cinst ChocolateyGUI
+cinst Yeoman
+
+cinst virtualbox
+cinst vagrant
