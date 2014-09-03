@@ -2,7 +2,7 @@ cinst git
 
 cinst ConEmu
 cinst notepadplusplus
-cinst install rubymine
+cinst rubymine
 
 cinst PhantomJS
 cinst Firefox -Version 31.0

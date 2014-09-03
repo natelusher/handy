@@ -6,12 +6,12 @@ Boxstarter - http://boxstarter.org/ is a package manager tool of sorts for windo
 It requires that you first install chocolatey (http://chocolatey.org/) via an admin console or powershell w/ the following command:
 
 with cmd
-    
+
     @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
 -OR- with powershell
- 
-   iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+
+    iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 
 
 After installing chocolatey, you can install boxstarter with:
