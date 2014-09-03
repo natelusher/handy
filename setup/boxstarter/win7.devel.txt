@@ -19,7 +19,7 @@ cinst PhantomJS
 cinst Firefox -Version 31.0
 cinst GoogleChrome
 
-cinst Ruby
+cinst Ruby1.9
 cinst ruby.devkit
 cinst Python
 cinst Compass
