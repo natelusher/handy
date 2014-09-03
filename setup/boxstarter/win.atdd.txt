@@ -1,0 +1,12 @@
+cinst git
+
+cinst ConEmu
+cinst notepadplusplus
+cinst install rubymine
+
+cinst PhantomJS
+cinst Firefox -Version 31.0
+cinst GoogleChrome
+
+cinst Ruby
+cinst ruby.devkit

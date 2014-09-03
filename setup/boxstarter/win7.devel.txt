@@ -1,6 +1,3 @@
-Set-ExplorerOptions -showHidenFilesFoldersDrives -showProtectedOSFiles -showFileExtensions
-Enable-RemoteDesktop
-
 cinst PowerShell
 cinst Console2
 cinst putty
@@ -14,6 +11,9 @@ cinst curl
 cinst sublimetext2
 cinst notepadplusplus
 cinst Atom
+cinst intellijidea-community
+cinst rubymine
+cinst eclipse
 
 cinst PhantomJS
 cinst Firefox -Version 31.0
@@ -23,7 +23,11 @@ cinst Ruby
 cinst ruby.devkit
 cinst Python
 cinst Compass
+cinst sass
+cinst jdk7
+cinst jdk8
 
+cinst maven
 cinst nodejs
 cinst npm
 cinst pip
