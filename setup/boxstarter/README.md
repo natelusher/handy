@@ -3,13 +3,17 @@ boxstarter
 
 Boxstarter - http://boxstarter.org/ is a package manager tool of sorts for windows.
 
-It requires that you first install chocolatey (http://chocolatey.org/) via an admin console or powershell w/ the following command:
+You can setup a windows machine in one command from powershell
 
-with cmd
+    START http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/natelusher/handy/master/setup/boxstarter/win.atdd.txt
+
+Alternatively, you can install chocolatey and boxstarter manually, and then run pacakge installs manually from the machine
+
+Install chocolatey with admin cmd
 
     @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
--OR- with powershell
+Or with admin powershell
 
     iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 
