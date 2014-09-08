@@ -1,10 +1,13 @@
 cinst PowerShell
-cinst Console2
+cinst ConEm
 cinst putty
 cinst cyg-get
 cinst Cygwin
+cinst ansicon
 
 cinst git
+cinst githubforwindows
+cinst gittfs
 cinst Wget
 cinst curl
 
@@ -18,10 +21,11 @@ cinst eclipse
 cinst PhantomJS
 cinst Firefox -Version 31.0
 cinst GoogleChrome
+cinst ChromeDriver2
 
 cinst Ruby1.9
 cinst ruby.devkit
-cinst Python
+cinst bundler -source ruby
 cinst Compass
 cinst sass
 cinst jdk7
@@ -30,7 +34,6 @@ cinst jdk8
 cinst maven
 cinst nodejs
 cinst npm
-cinst pip
 
 cinst ChocolateyGUI
 cinst Yeoman

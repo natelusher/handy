@@ -1,12 +1,14 @@
 cinst git
 
 cinst ConEmu
+cinst ansicon
 cinst notepadplusplus
 cinst rubymine
 
 cinst PhantomJS
 cinst Firefox -Version 31.0
 cinst GoogleChrome
+cinst ChromeDriver2
 
 cinst Ruby1.9
 cinst ruby.devkit
